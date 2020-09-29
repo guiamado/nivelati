@@ -13,8 +13,13 @@ class CreateComentariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('comentarios', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('comentario', function (Blueprint $table) {
+            $table->increments('idComentario');
+            $table->text('descricaoComentario');
+
+            $table->integer('idPublicacao')->unsigned();
+            $table->integer('idUsuario')->unsigned();
+            $table->foreign('idPublicacao')->references('idPublicacao')->on('publicacao')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateComentariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comentarios');
+        Schema::dropIfExists('comentario');
     }
 }

@@ -13,8 +13,14 @@ class CreatePublicacaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('publicacaos', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('publicacao', function (Blueprint $table) {
+            $table->increments('idPublicacao');
+            $table->string('titulo');
+            $table->string('slug');
+            $table->text('descricaoPublicacao');
+
+            $table->integer('idCategoria')->unsigned();
+            $table->integer('idUsuario')->unsigned();
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreatePublicacaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publicacaos');
+        Schema::dropIfExists('publicacao');
     }
 }
