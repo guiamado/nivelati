@@ -13,9 +13,8 @@ class CreateAvaliacaoComentariosTable extends Migration
      */
     public function up()
     {
-        Schema::create('avaliacaoComentario', function (Blueprint $table) {
+        Schema::create('avaliacao_comentario', function (Blueprint $table) {
             $table->increments('idAvaliacaoComentario');
-
             $table->integer('idComentario');
             $table->integer('idUsuario');
             $table->timestamps();
@@ -29,6 +28,6 @@ class CreateAvaliacaoComentariosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avaliacaoComentario');
+        Schema::dropIfExists('avaliacao_comentario');
     }
 }

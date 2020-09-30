@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Publicacao extends Model
 {
+    protected $table = 'publicacao';
+
     public function user()
     {
         return $this->belongsTo(User::class);

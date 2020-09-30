@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comentario extends Model
 {
+    protected $table = 'comentario';
     public function publicacao()
     {
         return $this->belongsTo(Publicacao::class);
