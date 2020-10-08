@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Publicacao;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\PublicacaoResource;
 
 class PublicacaoController extends Controller
 {
@@ -14,17 +16,7 @@ class PublicacaoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return PublicacaoResource::collection(Publicacao::latest()->get());
     }
 
     /**
@@ -35,7 +27,8 @@ class PublicacaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Publicacao::create($request->all());
+        return response('Created', 201);
     }
 
     /**
@@ -46,18 +39,7 @@ class PublicacaoController extends Controller
      */
     public function show(Publicacao $publicacao)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Publicacao  $publicacao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Publicacao $publicacao)
-    {
-        //
+        return new PublicacaoResource($publicacao);
     }
 
     /**
@@ -69,7 +51,8 @@ class PublicacaoController extends Controller
      */
     public function update(Request $request, Publicacao $publicacao)
     {
-        //
+        $publicacao->update($request->all());
+        return response('Updated', 202);
     }
 
     /**
@@ -80,6 +63,8 @@ class PublicacaoController extends Controller
      */
     public function destroy(Publicacao $publicacao)
     {
-        //
+        $publicacao->delete();
+        // return new PublicacaoResource(['statusCode' => 204, 'status' => 'Deleted']);
+        return response('Deleted', 204);
     }
 }
