@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comentario extends Model
 {
     protected $table = 'comentario';
+    protected $primaryKey = 'idComentario';
+    protected $guarded = [];
+    
     public function publicacao()
     {
         return $this->belongsTo(Publicacao::class);

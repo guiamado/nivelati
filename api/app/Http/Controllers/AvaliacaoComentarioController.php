@@ -4,82 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Model\AvaliacaoComentario;
 use Illuminate\Http\Request;
+use App\Model\Comentario;
 
 class AvaliacaoComentarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function avaliar(Comentario $comentario, Request $request)
     {
-        //
+        $avaliacao = new AvaliacaoComentario;
+        $avaliacao->idComentario = $comentario->idComentario;
+        $avaliacao->idUsuario = $request->idUsuario;
+        $avaliacao->save();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function deletarAvaliacao(Comentario $comentario, Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\AvaliacaoComentario  $avaliacaoComentario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(AvaliacaoComentario $avaliacaoComentario)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\AvaliacaoComentario  $avaliacaoComentario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AvaliacaoComentario $avaliacaoComentario)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\AvaliacaoComentario  $avaliacaoComentario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AvaliacaoComentario $avaliacaoComentario)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\AvaliacaoComentario  $avaliacaoComentario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AvaliacaoComentario $avaliacaoComentario)
-    {
-        //
+        AvaliacaoComentario::where('idUsuario', $request->idUsuario)->where('idComentario', $comentario->idComentario)->first()->delete();
     }
 }

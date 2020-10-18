@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="mt-2">
     <v-footer absolute padless>
       <v-col class="text-center pa-0" cols="12">
         {{ new Date().getFullYear() }} — <strong>NIVELA T.I.</strong>

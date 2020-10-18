@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\Comentario;
+use App\Model\Publicacao;
 use Illuminate\Http\Request;
+use App\Http\Resources\ComentarioResource;
 
 class ComentarioController extends Controller
 {
@@ -12,20 +14,11 @@ class ComentarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Publicacao $publicacao)
     {
-        //
+        return ComentarioResource::collection(Comentario::where('idPublicacao', $publicacao->idPublicacao)->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +26,14 @@ class ComentarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Publicacao $publicacao, Request $request)
     {
-        //
+        $comentario = new Comentario;
+        $comentario->descricaoComentario = $request->descricaoComentario;
+        $comentario->idUsuario = $request->idUsuario;
+        $comentario->idPublicacao = $request->idPublicacao;
+        $comentario->save();
+        return response(['comentario' => new ComentarioResource($comentario)], 201);
     }
 
     /**
@@ -44,21 +42,11 @@ class ComentarioController extends Controller
      * @param  \App\Model\Comentario  $comentario
      * @return \Illuminate\Http\Response
      */
-    public function show(Comentario $comentario)
+    public function show(Publicacao $publicacao, Comentario $comentario)
     {
-        //
+        return new ComentarioResource($comentario);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Comentario  $comentario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comentario $comentario)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +55,10 @@ class ComentarioController extends Controller
      * @param  \App\Model\Comentario  $comentario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comentario $comentario)
+    public function update(Publicacao $publicacao, Request $request, Comentario $comentario)
     {
-        //
+        $comentario->update($request->all());
+        return response('Updated', 202);
     }
 
     /**
@@ -78,8 +67,9 @@ class ComentarioController extends Controller
      * @param  \App\Model\Comentario  $comentario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comentario $comentario)
+    public function destroy(Publicacao $publicacao, Comentario $comentario)
     {
-        //
+        $comentario->delete();
+        return response('Deleted', 204);
     }
 }

@@ -8,6 +8,7 @@
         <v-divider class="my-2"></v-divider>
         <div>Publicado em {{ publicacao.created_at }}</div>
         <div>Criado por {{ publicacao.usuario }}</div>
+        <div>Categoria: {{ publicacao.categoria }}</div>
         <div>Discussões na publicação {{ publicacao.comentarios }}</div>
       </v-card-text>
     </v-card>
@@ -44,7 +45,7 @@ export default {
             this.publicacoes = res.data.data;
           })
           .finally(() => (this.loading = false));
-      }, 3000);
+      }, 1000);
     },
   },
 };

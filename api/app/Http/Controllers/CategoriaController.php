@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Categoria;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\CategoriaResource;
 
 class CategoriaController extends Controller
 {
@@ -14,18 +16,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        return CategoriaResource::collection(Categoria::latest()->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +28,12 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Categoria::create($request->all());
+        $categoria = new Categoria;
+        $categoria->categoria = $request->categoria;
+        $categoria->slug = str_slug($request->categoria);
+        $categoria->save();
+        return response('Created', 201);
     }
 
     /**
@@ -44,20 +42,9 @@ class CategoriaController extends Controller
      * @param  \App\Model\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show(Categoria $categorium)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Categoria  $categoria
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categoria $categoria)
-    {
-        //
+        return new CategoriaResource($categorium);
     }
 
     /**
@@ -67,9 +54,15 @@ class CategoriaController extends Controller
      * @param  \App\Model\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, Categoria $categorium)
     {
-        //
+        $categorium->update(
+            [
+                'categoria' => $request->categoria,
+                'slug' => str_slug($request->categoria)
+            ]
+        );
+        return response('Updated', 202);
     }
 
     /**
@@ -78,8 +71,11 @@ class CategoriaController extends Controller
      * @param  \App\Model\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(Categoria $categorium)
     {
-        //
+        $categorium->delete();
+        // $categoria = Categoria::findOrfail($id);
+        // $categoria->delete();
+        return response('Deleted', 204);
     }
 }

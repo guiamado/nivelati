@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\User;
 use App\Model\Comentario;
+use App\Model\Categoria;
 
 class PublicacaoResource extends JsonResource
 {
@@ -26,6 +27,7 @@ class PublicacaoResource extends JsonResource
             'usuario' => User::find($this->idUsuario)->name,
             'idUsuario' => $this->idUsuario,
             'comentarios' => Comentario::where('idPublicacao', $this->idPublicacao)->get()->count(),
+            'categoria' => Categoria::find($this->idCategoria)->categoria
         ];
     }
 }
