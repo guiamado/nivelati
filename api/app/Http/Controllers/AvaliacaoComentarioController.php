@@ -8,6 +8,11 @@ use App\Model\Comentario;
 
 class AvaliacaoComentarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
+
     public function avaliar(Comentario $comentario, Request $request)
     {
         $avaliacao = new AvaliacaoComentario;

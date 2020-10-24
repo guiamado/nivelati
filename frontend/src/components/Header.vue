@@ -3,14 +3,22 @@
     <router-link :to="'/'" style="text-decoration: none">
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="Cooper Logo"
           class="shrink mr-2"
           contain
           :src="require('@/assets/images/logoCooper_small_v2.png')"
           transition="scale-transition"
           width="160"
         />
-        <span class="black--text">NIVELA T.I.</span>
+        <v-img
+          alt="Nivela Logo"
+          class="shrink mr-2"
+          contain
+          :src="require('@/assets/images/logoNivelaTI.png')"
+          transition="scale-transition"
+          width="160"
+        />
+        <!-- <span class="black--text">NIVELA T.I.</span> -->
       </div>
     </router-link>
 

@@ -12,3 +12,18 @@ Route::group([
      Route::post('/avaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@avaliar');
      Route::delete('/avaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@deletarAvaliacao');
 });
+
+Route::group([
+
+    'middleware' => ['api', 'cors'],
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
