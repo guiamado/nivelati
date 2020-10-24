@@ -16,7 +16,7 @@
           contain
           :src="require('@/assets/images/logoNivelaTI.png')"
           transition="scale-transition"
-          width="160"
+          width="130"
         />
         <!-- <span class="black--text">NIVELA T.I.</span> -->
       </div>
@@ -32,16 +32,20 @@
       <span class="mr-2">Latest Release</span>
       <v-icon>mdi-open-in-new</v-icon>
     </v-btn> -->
-    <v-btn text @click="mudarRota('/publicacoes')">
+    <v-btn text @click="mudarRota('/')">
       <span :class="{ 'blue--text': isTelaPublicacoes }">Fórum</span>
     </v-btn>
-    <v-btn text @click="mudarRota('/')">
+    <v-btn text @click="mudarRota('/login')" v-if="!token">
       <span :class="{ 'blue--text': isTelaLogin }">Login</span>
+    </v-btn>
+    <v-btn text @click="realizarLogout" v-if="token">
+      <span>Logout</span>
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -58,20 +62,35 @@ export default {
       this.verificarRotas();
     },
   },
+  computed: {
+    ...mapGetters({
+      token: "logginStore/token",
+    }),
+  },
   methods: {
+    ...mapActions({
+      logoutAction: "logginStore/logoutAction",
+    }),
     verificarRotas() {
       this.isTelaLogin = false;
       this.isTelaPublicacoes = false;
-      if (this.$route.path === "/" || this.$route.path === "/cadastro") {
+      if (this.$route.path === "/login" || this.$route.path === "/cadastro") {
         this.isTelaLogin = true;
       }
-      if (this.$route.path === "/publicacoes") {
+      if (this.$route.path === "/") {
         this.isTelaPublicacoes = true;
       }
     },
     mudarRota(rota) {
       if (this.$route.path == rota) return;
       this.$router.push({ path: rota });
+    },
+    realizarLogout() {
+      this.logoutAction().then((res) => {
+        if (res.data) {
+          this.mudarRota("/login");
+        }
+      });
     },
   },
 };

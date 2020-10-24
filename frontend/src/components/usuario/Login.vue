@@ -28,32 +28,61 @@
         <v-btn color="info" :to="'/cadastro'"> Cadastrar </v-btn>
       </v-form>
     </v-col>
+    <Loading :loading="loading" />
   </v-row>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+import Loading from "../utils/Loading";
+
 export default {
   name: "Login",
-  data: () => ({
-    valid: true,
-    senha: "",
-    senhaRules: [(v) => !!v || "A senha é obrigatória"],
-    email: "",
-    emailRules: [
-      (v) => !!v || "E-mail é obrigatório",
-      (v) => /.+@.+\..+/.test(v) || "Digite um e-mail válido",
-    ],
-  }),
-
+  components: {
+    Loading,
+  },
+  data() {
+    return {
+      valid: true,
+      senha: "",
+      senhaRules: [(v) => !!v || "A senha é obrigatória"],
+      email: "",
+      emailRules: [
+        (v) => !!v || "E-mail é obrigatório",
+        (v) => /.+@.+\..+/.test(v) || "Digite um e-mail válido",
+      ],
+      loading: false,
+    };
+  },
+  computed: {
+    ...mapGetters({
+      token: "logginStore/token",
+    }),
+  },
   methods: {
+    ...mapActions({
+      loginAction: "logginStore/loginAction",
+    }),
     validate() {
-      this.$refs.form.validate();
+      const isFormValido = this.$refs.form.validate();
+      if (isFormValido) {
+        this.realizarRequisicao();
+      }
     },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+    realizarRequisicao() {
+      this.loading = true;
+      const objReq = {
+        email: this.email,
+        password: this.senha,
+      };
+
+      this.loginAction(objReq)
+        .then((res) => {
+          if (res.data && res.data.access_token) {
+            this.$router.push({ path: "/" });
+          }
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };

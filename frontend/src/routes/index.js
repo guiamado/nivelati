@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/', component: () => import('../components/Home.vue') },
     { path: '/cadastro', component: () => import('../components/usuario/Cadastro.vue') },
+    { path: '/login', component: () => import('../components/usuario/Login.vue') },
     { path: '/publicacoes', component: () => import('../components/publicacao/Publicacoes.vue') },
 ];
 

@@ -57,6 +57,7 @@ class Handler extends ExceptionHandler
         } else if($exception instanceOf JWTException) {
             return \response(['error' => 'Token não foi fornecido.'], 400);
         }
+        dd("oi");
         return parent::render($request, $exception);
     }
 }

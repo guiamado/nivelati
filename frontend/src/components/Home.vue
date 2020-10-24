@@ -1,13 +1,14 @@
 <template>
-  <Login />
+  <Publicacoes />
 </template>
 
 <script>
-import Login from "./usuario/Login";
+import Publicacoes from "./publicacao/Publicacoes";
+
 export default {
   name: "Home",
   components: {
-    Login,
+    Publicacoes,
   },
 };
 </script>
