@@ -47,12 +47,18 @@
         <v-btn color="info" :to="'/'"> Entrar </v-btn>
       </v-form>
     </v-col>
+    <Loading :loading="loading" />
   </v-row>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import Loading from "../utils/Loading";
 export default {
   name: "Login",
+  components: {
+    Loading,
+  },
   data() {
     return {
       valid: true,
@@ -75,17 +81,40 @@ export default {
       ],
       cpf: "",
       nome: "",
+      loading: false,
     };
   },
   methods: {
+    ...mapActions({
+      signUpAction: "logginStore/signUpAction",
+    }),
     validate() {
-      this.$refs.form.validate();
+      const isFormValido = this.$refs.form.validate();
+      if (isFormValido) {
+        this.cadastrarUsuario();
+      }
     },
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    cadastrarUsuario() {
+      this.loading = true;
+      const objReq = {
+        name: this.nome,
+        email: this.email,
+        password: this.senha,
+        cpf: this.cpf,
+      };
+      this.signUpAction(objReq)
+        .then((res) => {
+          if (res.data && res.data.access_token) {
+            this.$router.push({ path: "/" });
+          }
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };

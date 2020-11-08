@@ -35,6 +35,9 @@
     <v-btn text @click="mudarRota('/')">
       <span :class="{ 'blue--text': isTelaPublicacoes }">Fórum</span>
     </v-btn>
+    <v-btn text @click="mudarRota('/categoria')" v-if="token">
+      <span :class="{ 'blue--text': isTelaCategoria }">Categoria</span>
+    </v-btn>
     <v-btn text @click="mudarRota('/login')" v-if="!token">
       <span :class="{ 'blue--text': isTelaLogin }">Login</span>
     </v-btn>
@@ -52,6 +55,7 @@ export default {
     return {
       isTelaLogin: false,
       isTelaPublicacoes: false,
+      isTelaCategoria: false,
     };
   },
   created() {
@@ -74,11 +78,15 @@ export default {
     verificarRotas() {
       this.isTelaLogin = false;
       this.isTelaPublicacoes = false;
+      this.isTelaCategoria = false;
       if (this.$route.path === "/login" || this.$route.path === "/cadastro") {
         this.isTelaLogin = true;
       }
       if (this.$route.path === "/") {
         this.isTelaPublicacoes = true;
+      }
+      if (this.$route.path === "/categoria") {
+        this.isTelaCategoria = true;
       }
     },
     mudarRota(rota) {

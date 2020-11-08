@@ -8,6 +8,7 @@ const routes = [
     { path: '/cadastro', component: () => import('../components/usuario/Cadastro.vue') },
     { path: '/login', component: () => import('../components/usuario/Login.vue') },
     { path: '/publicacoes', component: () => import('../components/publicacao/Publicacoes.vue') },
+    { path: '/categoria', component: () => import('../components/categoria/Categoria.vue') },
 ];
 
 export default new VueRouter({

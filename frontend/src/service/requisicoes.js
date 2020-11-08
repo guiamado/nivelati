@@ -23,8 +23,8 @@ function patch(urlString, data) {
     return axios.patch(`${process.env.VUE_APP_API}${urlString}`, data, pegarTokenCabecalho());
 }
 
-function remove(urlString, data) {
-    return axios.delete(`${process.env.VUE_APP_API}${urlString}`, data, pegarTokenCabecalho());
+function remove(urlString) {
+    return axios.delete(`${process.env.VUE_APP_API}${urlString}`, pegarTokenCabecalho());
 }
 
 export const requisicoes = {
