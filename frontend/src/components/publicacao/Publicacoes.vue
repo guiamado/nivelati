@@ -22,7 +22,12 @@
             </v-card-text>
             <v-card-actions v-if="token">
               <v-spacer></v-spacer>
-              <v-btn color="success"> Ver detalhes da Publicação </v-btn>
+              <v-btn
+                color="success"
+                @click="abrirPublicacao(publicacao.idPublicacao)"
+              >
+                Ver detalhes da Publicação
+              </v-btn>
             </v-card-actions>
           </v-card>
         </template>
@@ -99,6 +104,9 @@ export default {
           this.categorias = res.data.data;
         })
         .finally(() => (this.loading = false));
+    },
+    abrirPublicacao(idPublicacao) {
+      this.$router.push({ path: `/publicacao/${idPublicacao}` });
     },
   },
 };

@@ -11,7 +11,10 @@ function pegarTokenCabecalho() {
     }
 }
 
-function get(urlString) {
+function get(urlString, isAutenticado = false) {
+    if (isAutenticado) {
+        return axios.get(`${process.env.VUE_APP_API}${urlString}`, pegarTokenCabecalho());
+    }
     return axios.get(`${process.env.VUE_APP_API}${urlString}`);
 }
 

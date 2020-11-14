@@ -7,5 +7,9 @@ export const mutations = {
     [types.USUARIO_LOGOUT](state, dadosLogout) {
         state.dadosLogout = dadosLogout;
         state.token = null;
+        state.dadosUsuario = null;
+    },
+    [types.DADOS_USUARIO](state, dadosUsuario) {
+        state.dadosUsuario = dadosUsuario;
     },
 };

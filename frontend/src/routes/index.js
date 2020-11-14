@@ -8,6 +8,7 @@ const routes = [
     { path: '/cadastro', component: () => import('../components/usuario/Cadastro.vue') },
     { path: '/login', component: () => import('../components/usuario/Login.vue') },
     { path: '/publicacoes', component: () => import('../components/publicacao/Publicacoes.vue') },
+    { path: '/publicacao/:id', component: () => import('../components/publicacao/Publicacao.vue') },
     { path: '/categoria', component: () => import('../components/categoria/Categoria.vue') },
 ];
 

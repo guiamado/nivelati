@@ -94,11 +94,15 @@ export default {
       this.$router.push({ path: rota });
     },
     realizarLogout() {
-      this.logoutAction().then((res) => {
-        if (res.data) {
+      this.logoutAction()
+        .then((res) => {
+          if (res.data) {
+            this.mudarRota("/login");
+          }
+        })
+        .catch(() => {
           this.mudarRota("/login");
-        }
-      });
+        });
     },
   },
 };
