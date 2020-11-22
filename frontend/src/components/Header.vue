@@ -35,6 +35,11 @@
     <v-btn text @click="mudarRota('/')">
       <span :class="{ 'blue--text': isTelaPublicacoes }">Fórum</span>
     </v-btn>
+    <v-btn text @click="mudarRota('/criarPublicacao')" v-if="token">
+      <span :class="{ 'blue--text': isTelaCriarPublicacao }"
+        >Faça uma publicação</span
+      >
+    </v-btn>
     <v-btn text @click="mudarRota('/categoria')" v-if="token">
       <span :class="{ 'blue--text': isTelaCategoria }">Categoria</span>
     </v-btn>
@@ -56,6 +61,7 @@ export default {
       isTelaLogin: false,
       isTelaPublicacoes: false,
       isTelaCategoria: false,
+      isTelaCriarPublicacao: false,
     };
   },
   created() {
@@ -79,6 +85,8 @@ export default {
       this.isTelaLogin = false;
       this.isTelaPublicacoes = false;
       this.isTelaCategoria = false;
+      this.isTelaCriarPublicacao = false;
+
       if (this.$route.path === "/login" || this.$route.path === "/cadastro") {
         this.isTelaLogin = true;
       }
@@ -87,6 +95,9 @@ export default {
       }
       if (this.$route.path === "/categoria") {
         this.isTelaCategoria = true;
+      }
+      if (this.$route.path === "/criarPublicacao") {
+        this.isTelaCriarPublicacao = true;
       }
     },
     mudarRota(rota) {

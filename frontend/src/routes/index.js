@@ -9,6 +9,7 @@ const routes = [
     { path: '/login', component: () => import('../components/usuario/Login.vue') },
     { path: '/publicacoes', component: () => import('../components/publicacao/Publicacoes.vue') },
     { path: '/publicacao/:id', component: () => import('../components/publicacao/Publicacao.vue') },
+    { path: '/criarPublicacao', component: () => import('../components/publicacao/CriarPublicacao.vue') },
     { path: '/categoria', component: () => import('../components/categoria/Categoria.vue') },
 ];
 

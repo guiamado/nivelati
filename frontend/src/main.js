@@ -4,8 +4,13 @@ import vuetify from './plugins/vuetify';
 import router from './routes/index';
 import VueTheMask from 'vue-the-mask';
 import store from './store';
+import VueQuillEditor from 'vue-quill-editor';
 
-Vue.use(VueTheMask)
+import 'quill/dist/quill.core.css'; // import styles
+import 'quill/dist/quill.snow.css'; // for snow theme
+import 'quill/dist/quill.bubble.css'; // for bubble theme
+Vue.use(VueQuillEditor);
+Vue.use(VueTheMask);
 
 Vue.config.productionTip = false;
 
