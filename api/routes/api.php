@@ -10,7 +10,7 @@ Route::group([
      Route::apiResource('/categoria', 'CategoriaController');
      Route::apiResource('/publicacao/{publicacao}/comentario', 'ComentarioController');
      Route::post('/avaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@avaliar');
-     Route::delete('/avaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@deletarAvaliacao');
+     Route::post('/deletarAvaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@deletarAvaliacao');
 });
 
 Route::group([
