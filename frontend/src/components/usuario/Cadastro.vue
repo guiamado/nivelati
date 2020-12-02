@@ -87,6 +87,7 @@ export default {
   methods: {
     ...mapActions({
       signUpAction: "logginStore/signUpAction",
+      dadosUsuarioAction: "logginStore/dadosUsuarioAction",
     }),
     validate() {
       const isFormValido = this.$refs.form.validate();
@@ -111,6 +112,16 @@ export default {
       this.signUpAction(objReq)
         .then((res) => {
           if (res.data && res.data.access_token) {
+            this.buscarDadosUsuario();
+          }
+        })
+        .finally(() => (this.loading = false));
+    },
+    buscarDadosUsuario() {
+      this.loading = true;
+      this.dadosUsuarioAction()
+        .then((res) => {
+          if (res.data) {
             this.$router.push({ path: "/" });
           }
         })
