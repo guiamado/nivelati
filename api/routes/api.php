@@ -11,6 +11,8 @@ Route::group([
      Route::apiResource('/publicacao/{publicacao}/comentario', 'ComentarioController');
      Route::post('/avaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@avaliar');
      Route::post('/deletarAvaliacaoComentario/{comentario}', 'AvaliacaoComentarioController@deletarAvaliacao');
+     Route::get('/trendingTopics', 'TrendingTopicsController@index');
+     Route::get('/trendingTopics/getByCategoria/{categoria}', 'TrendingTopicsController@getByCategoria');
 });
 
 Route::group([
