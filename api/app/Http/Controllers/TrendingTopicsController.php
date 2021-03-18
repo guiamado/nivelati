@@ -15,9 +15,12 @@ class TrendingTopicsController extends Controller
      */
     public function index()
     {
-        return Comentario::select(DB::raw('count(idPublicacao) as quantidade, idPublicacao, descricaoComentario'))->groupBy('idPublicacao')->orderBy('quantidade', 'desc')->limit(5)->get();
-        $comentarios = Comentario::select(DB::raw('count(*) as quantidade, idPublicacao'))->groupBy('idPublicacao')->get();
-        dd($comentarios);
+        return Comentario::select(DB::raw('count(comentario.idPublicacao) as quantidade, comentario.idPublicacao, publicacao.titulo'))
+            ->join('publicacao', 'comentario.idPublicacao', '=', 'publicacao.idPublicacao')
+            ->groupBy('comentario.idPublicacao')
+            ->orderBy('quantidade', 'desc')
+            ->limit(5)
+            ->get();
     }
 
     /**
@@ -27,7 +30,7 @@ class TrendingTopicsController extends Controller
      */
     public function getByCategoria($categoria)
     {
-        return Comentario::select(DB::raw('count(comentario.idPublicacao) as quantidade, comentario.idPublicacao, comentario.descricaoComentario'))
+        return Comentario::select(DB::raw('count(comentario.idPublicacao) as quantidade, comentario.idPublicacao, publicacao.titulo'))
             ->join('publicacao', 'comentario.idPublicacao', '=', 'publicacao.idPublicacao')
             ->join('categoria', 'publicacao.idCategoria', '=', 'categoria.idCategoria')
             ->where('categoria.idCategoria', $categoria)
@@ -35,8 +38,6 @@ class TrendingTopicsController extends Controller
             ->orderBy('quantidade', 'desc')
             ->limit(5)
             ->get();
-        $comentarios = Comentario::select(DB::raw('count(*) as quantidade, idPublicacao'))->groupBy('idPublicacao')->get();
-        dd($comentarios);
     }
 
     /**

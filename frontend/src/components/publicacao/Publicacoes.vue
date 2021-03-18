@@ -48,13 +48,40 @@
             </v-card-title>
             <v-card-text>
               <div class="grey--text text-subtitle-1 text-center">Aqui você encontra as publicações mais populares entre os usuários.</div>
+              <v-row class="mb-3">
+                <v-col xl="12" class="py-2 black--text">
+                  <b>Selecione uma categoria para filtrar:</b>
+                </v-col>
+                <v-col xl="6" class="py-0">
+                  <v-select
+                    v-model="select"
+                    :items="filtroTrending"
+                    item-text="categoria"
+                    item-value="idCategoria"
+                    label="Categoria"
+                    persistent-hint
+                    single-line
+                    class="pt-0"
+                    hide-details
+                  ></v-select>
+                </v-col>
+                <v-col col="6">
+                  <v-btn
+                    small
+                    color="success"
+                    @click="filtrarTrend"
+                  >
+                    Filtrar
+                  </v-btn>
+                </v-col>
+              </v-row>
               <a
                 v-for="(trend, i) in trendingTopics"
                 :key="i"
                 class="black--text text-subtitle-1 contentWrap"
                 @click="abrirPublicacao(trend.idPublicacao)"
               >
-                {{ i + 1 }} - {{ trend.descricaoComentario }} <br/>
+                {{ i + 1 }} - {{ trend.titulo }} <br/>
               </a>
             </v-card-text>
           </v-card>
@@ -98,6 +125,8 @@ export default {
       publicacoes: null,
       categorias: null,
       trendingTopics: null,
+      select: 0,
+      filtroTrending: [{categoria: 'Selecione', idCategoria: 0}]
     };
   },
   computed: {
@@ -117,6 +146,7 @@ export default {
       this.publicacoes = responses[0].data.data;
       this.categorias = responses[1].data.data;
       this.trendingTopics = responses[2].data;
+      this.criarFiltrosTrending(this.categorias);
     })).finally(() => (this.loading = false));
   },
   methods: {
@@ -138,6 +168,27 @@ export default {
     abrirPublicacao(idPublicacao) {
       if(!this.token) return;
       this.$router.push({ path: `/publicacao/${idPublicacao}` });
+    },
+    criarFiltrosTrending(categorias) {
+      if(categorias && categorias.length > 0) {
+        categorias.forEach(element => {
+          this.filtroTrending.push(element);
+        });
+      }
+    },
+    filtrarTrend() {
+      this.loading = true;
+      if(this.select === 0) {
+        return this.buscarTrendingTopics().then((response) => {
+          this.trendingTopics = response.data;
+        })
+        .finally(() => (this.loading = false));
+      }
+      return requisicoes
+        .get(`/trendingTopics/getByCategoria/${this.select}`).then((response) => {
+          this.trendingTopics = response.data;
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };
