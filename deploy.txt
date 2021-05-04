@@ -1,0 +1,10 @@
+Para publicar o front no heroku:
+git subtree push --prefix frontend heroku-frontend master
+
+Para publicar o back no heroku:
+git subtree push --prefix api heroku master
+
+LINKS importantes:
+https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f
+https://medium.com/inato/how-to-setup-heroku-with-yarn-workspaces-d8eac0db0256
+https://jtway.co/deploying-subdirectory-projects-to-heroku-f31ed65f3f2
