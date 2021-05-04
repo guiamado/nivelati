@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['login', 'signup']]);
+        $this->middleware('JWT', ['except' => ['login', 'signup', 'hasUserIntegration']]);
     }
 
     /**
@@ -85,5 +85,30 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function loginIntegration($credencial)
+    {
+        if (! $token = auth()->attempt($credencial)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function hasUserIntegration(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if(is_null($user)) {
+            return response()->json(['hasError' => true], 200);
+        }
+
+        $credencial = [
+            'password' => $request->uid,
+            'email' => $request->email,
+        ];
+
+        return $this->loginIntegration($credencial);
     }
 }

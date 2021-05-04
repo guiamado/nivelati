@@ -44,3 +44,15 @@ export const dadosUsuarioAction = ({ commit }) => {
             return response;
         });
 };
+
+export const hasUserIntegration = ({ commit }, params) => {
+    return contaUsuario.hasUserIntegration(params)
+        .then((response) => {
+            const { data } = response;
+            if(!data.hasError) {
+                localStorage.setItem("token", data.access_token);
+                commit(types.USUARIO_LOGIN, data);
+            }
+            return response;
+        });
+};

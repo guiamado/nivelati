@@ -1,6 +1,9 @@
 <template>
   <v-row align="center" justify="center">
-    <v-col sm="12" lg="6" xl="6">
+    <v-col sm="12" :lg="dadosIntegracao ? 12 : 6" :xl="dadosIntegracao ? 12 : 6">
+      <div class="text-h3 text-center" v-if="!dadosIntegracao">
+        Bem vindo ao Nivela TI!
+      </div>
       <v-form ref="form" v-model="valid">
         <v-text-field
           v-model="nome"
@@ -27,6 +30,7 @@
           label="Senha"
           required
           type="password"
+          v-if="!isIntegracao"
         ></v-text-field>
         <v-text-field
           v-model="senhaConfirmacao"
@@ -34,6 +38,7 @@
           label="Confirmação da senha"
           required
           type="password"
+          v-if="!isIntegracao"
         ></v-text-field>
 
         <v-btn
@@ -44,7 +49,14 @@
         >
           Cadastrar
         </v-btn>
-        <v-btn color="info" :to="'/'"> Entrar </v-btn>
+        <v-btn color="info" :to="'/login'" v-if="!isIntegracao"> Entrar </v-btn>
+        <v-btn
+          color="error"
+          @click="cancelIntegracao"
+          v-if="isIntegracao"
+        >
+          Cancelar
+        </v-btn>
       </v-form>
     </v-col>
     <Loading :loading="loading" />
@@ -56,20 +68,27 @@ import { mapActions } from "vuex";
 import Loading from "../utils/Loading";
 export default {
   name: "Login",
+  props: {
+    dadosIntegracao: {
+      type: Object,
+      required: false,
+      default: null,
+    }
+  },
   components: {
     Loading,
   },
   data() {
     return {
       valid: true,
-      senha: "",
+      senha: this.dadosIntegracao ? this.dadosIntegracao.senha : "",
       senhaRules: [(v) => !!v || "A senha é obrigatória"],
       senhaConfirmacao: "",
       senhaConfirmacaoRules: [
         (v) => !!v || "A confirmação da senha é obrigatória",
         (v) => v === this.senha || "Digite a senha igual",
       ],
-      email: "",
+      email: this.dadosIntegracao ? this.dadosIntegracao.email : "",
       emailRules: [
         (v) => !!v || "E-mail é obrigatório",
         (v) => /.+@.+\..+/.test(v) || "Digite um e-mail válido",
@@ -80,9 +99,17 @@ export default {
         (v) => v.length === 14 || "Digite os 11 números do CPF.",
       ],
       cpf: "",
-      nome: "",
+      nome: this.dadosIntegracao ? this.dadosIntegracao.nome : "",
       loading: false,
     };
+  },
+  computed: {
+    isIntegracao() {
+      if(this.dadosIntegracao && Object.keys(this.dadosIntegracao).length > 0) {
+        return true;
+      }
+      return false;
+    }
   },
   methods: {
     ...mapActions({
@@ -122,11 +149,17 @@ export default {
       this.dadosUsuarioAction()
         .then((res) => {
           if (res.data) {
+            if(this.isIntegracao) {
+              this.$emit('onCloseIntegracao', false);
+            }
             this.$router.push({ path: "/" });
           }
         })
         .finally(() => (this.loading = false));
     },
+    cancelIntegracao() {
+      this.$emit('onCloseIntegracao', true);
+    }
   },
 };
 </script>

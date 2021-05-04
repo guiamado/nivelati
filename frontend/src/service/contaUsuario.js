@@ -18,8 +18,13 @@ function logout() {
     return axios.post(`${process.env.VUE_APP_API}/auth/logout`, { token: token }, config);
 }
 
+function hasUserIntegration(dados) {
+    return axios.post(`${process.env.VUE_APP_API}/auth/hasUserIntegration`, dados, config);
+}
+
 export const contaUsuario = {
     login,
     signUp,
     logout,
+    hasUserIntegration,
 };

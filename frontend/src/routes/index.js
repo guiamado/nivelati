@@ -11,6 +11,7 @@ const routes = [
     { path: '/publicacao/:id', component: () => import('../components/publicacao/Publicacao.vue') },
     { path: '/criarPublicacao', component: () => import('../components/publicacao/CriarPublicacao.vue') },
     { path: '/categoria', component: () => import('../components/categoria/Categoria.vue') },
+    { path: '/relatorio', component: () => import('../components/relatorio/Relatorio.vue') },
 ];
 
 export default new VueRouter({
