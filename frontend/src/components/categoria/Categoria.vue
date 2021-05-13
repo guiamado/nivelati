@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-row>
-      <v-col xl="6" offset="3">
+      <v-col xl="6" offset-xl="3" md="6" offset-md="3" sm="6" offset-sm="3">
         <v-text-field
           label="Nome da Categoria"
           v-model="categoriaTxt"
           hide-details
         ></v-text-field>
       </v-col>
-      <v-col xl="6" offset="3">
+      <v-col xl="6" md="6" offset-xl="3" offset-md="3" sm="6" offset-sm="3">
         <v-btn
           color="success"
           :disabled="!categoriaTxt"
@@ -17,7 +17,7 @@
           {{ isEdicaoCategoria ? "Alterar" : "Criar" }}
         </v-btn>
       </v-col>
-      <v-col xl="6" offset="3">
+      <v-col xl="6" md="6" offset-xl="3" offset-md="3" sm="6" offset-sm="3">
         <v-card>
           <v-card-title>
             <v-card width="100%" color="cyan lighten-1" class="pa-2" dark>
@@ -31,10 +31,10 @@
               class="black--text text-subtitle-1"
             >
               <v-row>
-                <v-col xl="8">
+                <v-col xl="8" md="8">
                   {{ categoria.categoria }}
                 </v-col>
-                <v-col xl="4" class="text-right pr-5">
+                <v-col xl="4" md="4" class="text-right pr-5">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -64,7 +64,7 @@
                     </v-tooltip>
                   </span>
                 </v-col>
-                <v-col xl="12" class="pa-0 px-3">
+                <v-col xl="12" md="12" sm="12" class="pa-0 px-3">
                   <v-divider v-if="i < categorias.length - 1"></v-divider>
                 </v-col>
               </v-row>

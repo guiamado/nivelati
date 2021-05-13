@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col xl="9">
+      <v-col xl="9" md="6">
         <v-skeleton-loader
           v-if="loading"
           height="94"
@@ -49,7 +49,7 @@
             <v-card-text>
               <div class="grey--text text-subtitle-1 text-center">Aqui você encontra as publicações mais populares entre os usuários.</div>
               <v-row class="mb-3">
-                <v-col xl="12" class="py-2 black--text">
+                <v-col xl="12" lg="12" md="12" sm="12" xs="12" class="py-2 black--text">
                   <b>Selecione uma categoria para filtrar:</b>
                 </v-col>
                 <v-col xl="6" class="py-0">
