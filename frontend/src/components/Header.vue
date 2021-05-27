@@ -90,7 +90,7 @@ export default {
       this.isTelaPublicacoes = false;
       this.isTelaCategoria = false;
       this.isTelaCriarPublicacao = false;
-      this.isTelaCriarPublicacao = false;
+      this.isTelaRelatorio = false;
 
       if (this.$route.path === "/login" || this.$route.path === "/cadastro") {
         this.isTelaLogin = true;
